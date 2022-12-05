@@ -1,64 +1,53 @@
-#include <bits/stdc++.h>
+#include "bits/stdc++.h"
 using namespace std;
 
-#define cl(a, b) memset(a, b, sizeof(a))
-#define all(x) x.begin(), x.end()
-typedef long long ll;
-typedef unsigned long long ull;
-typedef pair<int, int> pi;
-typedef vector<int> vi;
-
-const int mod = 1e9 + 7;
-
-void debug() {
-	
-}
-
-string p1() {
-  string line;
-  cin >> line;
-  stringstream ss(line);
-  vector<string> crates;
-  vector<string> instructions;
-  while (getline(ss, line)) {
-    if (line.empty()) {
-      break;
-    } else {
-      crates.push_back(line);
-    }
-  }
-  
-  cout << crates.size() << '\n';
-  
-  // now sort crates into data structure that knows crate number and crates above
-  vector<stack<char>> stacks = vector<stack<char>>();
-  for (int i = 0; i < crates.size(); ++i) {
-    for (int j = 0; j < crates[i].size(); ++j) {
-      if (crates[i][j] != ' ') {
-        stacks[i].push(crates[i][j]);
-      }
-    }
-  }
-  
-  
-  // print stacks
-  for (int i = 0; i < stacks.size(); ++i) {
-    cout << "stack " << i << ": ";
-    while (!stacks[i].empty()) {
-      cout << stacks[i].top() << ' ';
-      stacks[i].pop();
-    }
-    cout << '\n';
-  }
-
-  return "";
-}
-
-int p2() {
-	return 0;
-}
+#define sz(x) (int)(x.size())
+#define ALL(x) (x).begin(), (x).end()
+#define F0R(i, R) for (int i = (0); i < (R); ++i)
+#define FOR(i, L, R) for (int i = (L); i <= (R); ++i)
 
 int main() {
-	ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-	cout << p1() << '\n';
+	
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+
+	int N;
+	cin >> N;
+	vector<string> A(N + 1), B(N + 1);
+	FOR(i, 1, N) {
+		cin >> A[i];
+		B[i] = A[i];
+	}
+	
+	string ch;
+	int cnt, from, to;
+	while (cin >> ch >> cnt >> ch >> from >> ch >> to) {
+		string put;
+		while (cnt--) {
+			char get = A[from].back();
+			A[from].pop_back();
+			A[to].push_back(get);
+
+			get = B[from].back();
+			B[from].pop_back();
+			put.push_back(get);
+		}
+		reverse(ALL(put));
+		for (char c : put) {
+			B[to].push_back(c);
+		}
+	}
+	string ans1;
+	FOR(i, 1, N) {
+		ans1 += A[i].back();
+	}
+
+	string ans2;
+	FOR(i, 1, N) {
+		ans2 += B[i].back();
+	}
+	cout << ans1 << '\n';
+	cout << ans2 << '\n';
+
+	return 0;
 }
