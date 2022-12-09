@@ -13,6 +13,7 @@ const int mod = 1e9 + 7;
 #include <bits/stdc++.h>
 using namespace std;
 
+// this straight up doesn't work lol
 struct dir {
   string name;
   int size;
